@@ -46,8 +46,11 @@ tabs = doc.cssselect('table.acp')
 tabhash = lapTableToDict(tabs[0])
 
 # --- massage the data
+print "Lap,\tLaptime,\tTyre,\tFuel"
 for lapi,row in enumerate(tabhash):
     lap = lapi+1
-    print str(lap) + ": " + str(row)
+    #print str(lap) + ": " + str(row)
+    #print str(lap) + ", " + str(row['Laptime']) + ", " + row['Tyre'] + ", " + row['Fuel']
     row['Laptime'] = parseLapTime(row['Laptime'])
-    print str(lap) + ": " + str(row)
+    print str(lap) + ",\t" + ("%0.3f" % (row['Laptime'])) + ", \t" + row['Tyre'] + ", \t" + row['Fuel']
+    #print str(lap) + ": " + str(row)
