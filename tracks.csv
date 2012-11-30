@@ -1,0 +1,18 @@
+name,length,nlaps_default,overtaking,elevations,fuel_consumption,tyre_wear
+australia,5.303,29,hard,vfreq,avg,avg
+malaysia,5.543,28,avg,avg,high,vhigh
+china,5.451,28,avg,few,vhigh,vhigh
+bahrain,5.412,28,avg,few,vhigh,high
+spain,4.655,33,hard,few,high,vhigh
+monaco,3.34,39,vhard,vfreq,avg,low
+turkey,5.338,29,avg,avg,avg,vhigh
+gb,5.141,30,avg,avg,vhigh,avg
+germany,5.148,30,avg,few,low,avg
+hungary,4.381,35,vhard,avg,low,low
+europe,5.419,28,hard,avg,avg,avg
+belgium,7.004,22,avg,avg,high,high
+italy,5.793,26,veasy,avg,vhigh,low
+singapore,5.067,30,hard,freq,avg,avg
+japan,5.807,26,avg,avg,avg,high
+brazil,35,4.309,avg,few,avg,high
+abu dhabi,5.554,27,easy,avg,avg,avg
