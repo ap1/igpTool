@@ -94,60 +94,11 @@ def displayLapList(lapList):
 def pressEnterToContinue():
     raw_input("Press Enter to continue...")
 
-# -- main routine to explore pit strategy
-def exploreStrategyRecursive(curLap, curStint, curTyre, curGrip, lapList, tyreSequence, track, tyreWearHard, tyreWearSoft, minGrip):
-    #print curLap
-    # go to end of lap
-    nextLap = curLap + 1
-    nextGrip = 0
-    # -- update grip
-    if    curTyre == 'soft': nextGrip = curGrip + tyreWearSoft
-    elif  curTyre == 'hard': nextGrip = curGrip + tyreWearHard
-
-    # -- was this last lap?
-    if(curLap >= track['nlaps_default']):
-        finalLapList = copy.copy(lapList)
-        finalLapList.append(curTyre)
-        print "[%2.2f]" % curGrip,
-        displayLapList(finalLapList)
-        return 1
-
-    canPit   = ((curStint+1) <  (len(tyreSequence))) and (nextGrip <= 65.0) # -- is it possible to pit?
-    goodGrip = ((nextGrip)   >= (minGrip))           # -- do we have enough grip for another lap?
-
-    # -- Next, try to pit
-    if canPit:
-        nextStint   = curStint+1
-        nextTyre    = tyreSequence[nextStint]
-        nextGrip    = 0
-        nextLapList = copy.copy(lapList)
-        nextLapList.append(curTyre)
-        nextLapList.append('pit')
-        if    nextTyre == 'soft': nextGrip = 100 + 0.5*tyreWearSoft
-        elif  nextTyre == 'hard': nextGrip = 100 + 0.5*tyreWearHard
-        exploreStrategy(nextLap, nextStint, nextTyre, nextGrip, nextLapList, tyreSequence, track, tyreWearHard, tyreWearSoft, minGrip)
-
-
-    # -- First, try to go on without pitting
-    if goodGrip:
-        nextStint   = curStint
-        nextTyre    = curTyre
-        nextLapList = copy.copy(lapList)
-        nextLapList.append(curTyre)
-        exploreStrategy(nextLap, nextStint, nextTyre, nextGrip, nextLapList, tyreSequence, track, tyreWearHard, tyreWearSoft, minGrip)
-    elif not canPit:
-        return 0, []
-
-
-#def exploreStrategyIterative(curLap, curStint, curTyre, curGrip, lapList, tyreSequence, track, tyreWearHard, tyreWearSoft, minGrip):
-    
 def getStratListRecursive(whichStop, nStops, startLap, nLaps, curPitList, stratList):
-    #print "%d %d %d %d" % (whichStop, nStops, startLap, nLaps)
     lastLapForThisStop = (nLaps)-(nStops-whichStop)
     if(whichStop == (nStops)):
         stratList.append(curPitList)
         return
-    
     for lap in range(startLap, lastLapForThisStop):
         nextPitList = copy.copy(curPitList)
         nextPitList[lap] = 1
@@ -239,13 +190,15 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
         myLapTime = normalizedLapTime * track['difficulty'] 
         myLapTime = myLapTime * track['length']
 
+        if lap==1:
+            myLapTime += 3.0
+        elif (strat[lap-2]==1):
+            myLapTime += 17.0
+
         totalTime += myLapTime
 
     return totalTime
 
-    #for fuel in fuelAtMidOfLaps:
-    #    printWithoutEnd("%0.1f "%fuel)
-    #print ""
 # ------------------------------------------------------
 #  Code
 # ------------------------------------------------------
