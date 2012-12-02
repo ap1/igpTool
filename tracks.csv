@@ -1,18 +1,18 @@
-name,length,nlaps_default,overtaking,elevations,fuel_consumption,tyre_wear
-australia,5.303,29,hard,vfreq,avg,avg
-malaysia,5.543,28,avg,avg,high,vhigh
-china,5.451,28,avg,few,vhigh,vhigh
-bahrain,5.412,28,avg,few,vhigh,high
-spain,4.655,33,hard,few,high,vhigh
-monaco,3.34,39,vhard,vfreq,avg,low
-turkey,5.338,29,avg,avg,avg,vhigh
-gb,5.141,30,avg,avg,vhigh,avg
-germany,5.148,30,avg,few,low,avg
-hungary,4.381,35,vhard,avg,low,low
-europe,5.419,28,hard,avg,avg,avg
-belgium,7.004,22,avg,avg,high,high
-italy,5.793,26,veasy,avg,vhigh,low
-singapore,5.067,30,hard,freq,avg,avg
-japan,5.807,26,avg,avg,avg,high
-brazil,4.309,35,avg,few,avg,high
-abu dhabi,5.554,27,easy,avg,avg,avg
+name,length,nlaps_default,overtaking,elevations,fuel_consumption,tyre_wear,difficulty
+australia,5.303,29,hard,vfreq,avg,avg,1.03
+malaysia,5.543,28,avg,avg,high,vhigh,1.03
+china,5.451,28,avg,few,vhigh,vhigh,1.044562019
+bahrain,5.412,28,avg,few,vhigh,high,1.051509018
+spain,4.655,33,hard,few,high,vhigh,1.032296172
+monaco,3.34,39,vhard,vfreq,avg,low,1.611262543
+turkey,5.338,29,avg,avg,avg,vhigh,1.031489561
+gb,5.141,30,avg,avg,vhigh,avg,0.957473369
+germany,5.148,30,avg,few,low,avg,1.073181666
+hungary,4.381,35,vhard,avg,low,low,1.234443336
+europe,5.419,28,hard,avg,avg,avg,1.03
+belgium,7.004,22,avg,avg,high,high,1.03
+italy,5.793,26,veasy,avg,vhigh,low,1.03
+singapore,5.067,30,hard,freq,avg,avg,1.03
+japan,5.807,26,avg,avg,avg,high,1.03
+brazil,4.309,35,avg,few,avg,high,1.03
+abu dhabi,5.554,27,easy,avg,avg,avg,1.03
