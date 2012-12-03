@@ -22,7 +22,7 @@ def fetchTrackInfo(args):
 
 # -- Estimate fuel consumption
 def estimateFuelConsumption(track):
-    return 0.73 * track['length']
+    return 0.727 * track['length']
 
 # -- Estimate tyre wear
 def estimateTyreWear(track):
@@ -130,7 +130,7 @@ def isFeasibleStrat(strat, tyreSequence, track, tyreWearHard, tyreWearSoft, minG
 
         # For next lap
         if(strat[lap-1]==1):
-            if gripAfterLap > minGrip*1.2: return False, []
+            #if gripAfterLap > minGrip*2.0: return False, []
             curStintIdx = curStintIdx + 1
             curTyre = tyreSequence[curStintIdx]
             if    curTyre == 'soft': gripAfterLap = 100.0 + tyreWearSoft*0.5
@@ -199,7 +199,7 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
         lapTimeVector[lap-1] = myLapTime
         totalTime += myLapTime
 
-    return totalTime, fuelAtMidOfLaps, lapTimeVector
+    return totalTime, fuelAtEndOfLaps, lapTimeVector
 
 # ------------------------------------------------------
 #  Code
@@ -226,7 +226,7 @@ print "%d laps" % (track['nlaps_default'])
 fuelConsumption             = estimateFuelConsumption(track)
 tyreWearSoft, tyreWearHard  = estimateTyreWear(track)
 
-minGrip = 45.0
+minGrip = 25.0
 
 softGoodLaps = findGoodLaps(tyreWearSoft, minGrip)
 hardGoodLaps = findGoodLaps(tyreWearHard, minGrip)
@@ -284,27 +284,25 @@ for curStints in range(1,args.stints+1):
                 stratLapTimes.append([totalTime, stratString, strat, tyreSequence, lapGripVector, lapFuelVector, lapTimeVector]);
                 #print "%0.1f %s" % (totalTime, stratString)
 
+for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
+    if sid<20:
+      print "[%0.2d] [%0.0f sec] %s" % (sid+1, stratLapTime[0], stratLapTime[1])
+
 if(len(stratLapTimes)>0):    
     print "--- Top %d Stop Strategies ---" % (curStints-1)
-    print "Lap, Status, Tyre, Fuel, Laptime..."
+    print "Lp, ,Tyre,FBeg,FEnd,time..."
     for lap in range(1,track['nlaps_default']+1):
-        printWithoutEnd("%d," % lap)
+        printWithoutEnd("%0.2d," % lap)
         for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
             if sid<3:
-                if stratLapTime[2][lap-1]==1:
-                    printWithoutEnd("P,%0.1f,%0.1f,%0.1f," % \
-                          ( stratLapTime[4][lap-1], \
-                            stratLapTime[5][lap-1], \
-                            stratLapTime[6][lap-1]))
-                else:
-                    printWithoutEnd(" ,%0.1f,%0.1f,%0.1f," % \
-                          ( stratLapTime[4][lap-1], \
-                            stratLapTime[5][lap-1], \
-                            stratLapTime[6][lap-1]))
-                    
+                pitchar = ' '
+                if stratLapTime[2][lap-1]==1: pitchar = 'P'
+
+                printWithoutEnd("%s,%0.1f,%4.1f,%4.1f,%5.1f," % \
+                      ( pitchar,
+                        stratLapTime[4][lap-1], \
+                        stratLapTime[5][lap-1]+fuelConsumption, \
+                        stratLapTime[5][lap-1], \
+                        stratLapTime[6][lap-1]))
         print ''
-    #for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
-    #    if sid<10:
-    #      print "[%0.2d] %0.1f %s" % (i+1, stratLapTime[0], stratLapTime[1])
-    #      #print stratLapTime
 
