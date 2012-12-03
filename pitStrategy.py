@@ -144,6 +144,7 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
     
     fuelAtEndOfLaps = [0]*track['nlaps_default']
     fuelAtMidOfLaps = [0]*track['nlaps_default']
+    lapTimeVector   = [0]*track['nlaps_default']
 
     for lap in range(track['nlaps_default'],0,-1):
         if(strat[lap-1]==1 or lap==(track['nlaps_default'])):
@@ -195,9 +196,10 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
         elif (strat[lap-2]==1):
             myLapTime += 17.0
 
+        lapTimeVector[lap-1] = myLapTime
         totalTime += myLapTime
 
-    return totalTime
+    return totalTime, fuelAtMidOfLaps, lapTimeVector
 
 # ------------------------------------------------------
 #  Code
@@ -238,6 +240,7 @@ print "hard tyre %0.1f per lap (good for %d laps)" % (-tyreWearHard, hardGoodLap
 
 print "\n---------- Pit Simulation --------------"
 
+stratLapTimes = []
 for curStints in range(1,args.stints+1):
     #print "Trying %d pit stop strategy..." % (curStints-1)
 
@@ -251,20 +254,15 @@ for curStints in range(1,args.stints+1):
 
     numStrats = len(stratList)
 
-    stratLapTimes = []
 
     for strat in stratList:
-        #for s in strat:
-        #    printWithoutEnd(str(s))
-        #    if(s==1): printWithoutEnd(' ')
-        #print ''
         for stintCode in range(0,stintMaxCode):
             tyreSequence = decodeStint(stintCode, curStints)
 
             isFeasible, lapGripVector = isFeasibleStrat(strat, tyreSequence, track, tyreWearHard, tyreWearSoft, minGrip)
 
             if isFeasible:
-                totalTime = predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, tyreWearSoft, minGrip, fuelConsumption)
+                totalTime, lapFuelVector, lapTimeVector = predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, tyreWearSoft, minGrip, fuelConsumption)
 
                 #printWithoutEnd("%0.1f," % totalTime)
 
@@ -283,12 +281,30 @@ for curStints in range(1,args.stints+1):
                         stratString = stratString + 'p'
                 #print ''
 
-                stratLapTimes.append([totalTime, stratString]);
+                stratLapTimes.append([totalTime, stratString, strat, tyreSequence, lapGripVector, lapFuelVector, lapTimeVector]);
                 #print "%0.1f %s" % (totalTime, stratString)
 
-    if(len(stratLapTimes)>0):    
-        print "--- Top %d Stop Strategies ---" % (curStints-1)
-        for i, stratLapTime in enumerate(sorted(stratLapTimes)):
-            if i<10:
-              print "[%0.2d] %0.1f %s" % (i+1, stratLapTime[0], stratLapTime[1])
+if(len(stratLapTimes)>0):    
+    print "--- Top %d Stop Strategies ---" % (curStints-1)
+    print "Lap, Status, Tyre, Fuel, Laptime..."
+    for lap in range(1,track['nlaps_default']+1):
+        printWithoutEnd("%d," % lap)
+        for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
+            if sid<3:
+                if stratLapTime[2][lap-1]==1:
+                    printWithoutEnd("P,%0.1f,%0.1f,%0.1f," % \
+                          ( stratLapTime[4][lap-1], \
+                            stratLapTime[5][lap-1], \
+                            stratLapTime[6][lap-1]))
+                else:
+                    printWithoutEnd(" ,%0.1f,%0.1f,%0.1f," % \
+                          ( stratLapTime[4][lap-1], \
+                            stratLapTime[5][lap-1], \
+                            stratLapTime[6][lap-1]))
+                    
+        print ''
+    #for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
+    #    if sid<10:
+    #      print "[%0.2d] %0.1f %s" % (i+1, stratLapTime[0], stratLapTime[1])
+    #      #print stratLapTime
 
