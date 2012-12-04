@@ -109,6 +109,8 @@ def isFeasibleStrat(strat, tyreSequence, track, tyreWearHard, tyreWearSoft, minG
     curTyre     = tyreSequence[curStintIdx]
     curGrip     = 100.0
 
+    if tyreSequence[0]=='hard': return False, []
+
     lapGripVector = [0] * track['nlaps_default']
 
     if    curTyre == 'soft': curGrip = 100.0 + tyreWearSoft*0.5
