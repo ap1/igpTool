@@ -184,10 +184,10 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
             pred_Gs = 0.0
             pred_Gh = curGrip
         
-        normalizedLapTime = pred_s  * 16.6791497  + \
-                            pred_h  * 16.829491   + \
+        normalizedLapTime = pred_s  * 16.5791497  + \
+                            pred_h  * 16.929491   + \
                             pred_Gs *  0.0008001  + \
-                            pred_Gh * -0.00425353 + \
+                            pred_Gh * -0.000425353 + \
                             pred_f  *  0.01900627
         
         myLapTime = normalizedLapTime * track['difficulty'] 
