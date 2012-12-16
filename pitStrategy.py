@@ -286,25 +286,25 @@ for curStints in range(1,args.stints+1):
                 stratLapTimes.append([totalTime, stratString, strat, tyreSequence, lapGripVector, lapFuelVector, lapTimeVector]);
                 #print "%0.1f %s" % (totalTime, stratString)
 
-for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
-    if sid<20:
-      print "[%0.2d] [%0.0f sec] %s" % (sid+1, stratLapTime[0], stratLapTime[1])
+    for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
+        if sid<20:
+          print "[%0.2d] [%0.0f sec] %s" % (sid+1, stratLapTime[0], stratLapTime[1])
 
-if(len(stratLapTimes)>0):    
-    print "--- Top %d Stop Strategies ---" % (curStints-1)
-    print "Lp, ,Tyre,FBeg,FEnd,time..."
-    for lap in range(1,track['nlaps_default']+1):
-        printWithoutEnd("%0.2d," % lap)
-        for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
-            if sid<3:
-                pitchar = ' '
-                if stratLapTime[2][lap-1]==1: pitchar = 'P'
+    if(len(stratLapTimes)>0):    
+        print "--- Top %d Stop Strategies ---" % (curStints-1)
+        print "Lp, ,Tyre,FBeg,FEnd,time..."
+        for lap in range(1,track['nlaps_default']+1):
+            printWithoutEnd("%0.2d," % lap)
+            for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
+                if sid<3:
+                    pitchar = ' '
+                    if stratLapTime[2][lap-1]==1: pitchar = 'P'
 
-                printWithoutEnd("%s,%0.1f,%4.1f,%4.1f,%5.1f," % \
-                      ( pitchar,
-                        stratLapTime[4][lap-1], \
-                        stratLapTime[5][lap-1]+fuelConsumption, \
-                        stratLapTime[5][lap-1], \
-                        stratLapTime[6][lap-1]))
-        print ''
+                    printWithoutEnd("%s,%0.1f,%4.1f,%4.1f,%5.1f," % \
+                          ( pitchar,
+                            stratLapTime[4][lap-1], \
+                            stratLapTime[5][lap-1]+fuelConsumption, \
+                            stratLapTime[5][lap-1], \
+                            stratLapTime[6][lap-1]))
+            print ''
 
