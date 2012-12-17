@@ -228,7 +228,7 @@ print "%d laps" % (track['nlaps_default'])
 fuelConsumption             = estimateFuelConsumption(track)
 tyreWearSoft, tyreWearHard  = estimateTyreWear(track)
 
-minGrip = 25.0
+minGrip = 23.0
 
 softGoodLaps = findGoodLaps(tyreWearSoft, minGrip)
 hardGoodLaps = findGoodLaps(tyreWearHard, minGrip)
@@ -244,7 +244,7 @@ print "\n---------- Pit Simulation --------------"
 
 stratLapTimes = []
 for curStints in range(1,args.stints+1):
-    #print "Trying %d pit stop strategy..." % (curStints-1)
+    print "Trying %d pit stop strategy..." % (curStints-1)
 
     stintMaxCode = int(math.pow(2,curStints))
     #print "%x" % stintMaxCode
