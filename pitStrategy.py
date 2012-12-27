@@ -196,7 +196,7 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
         if lap==1:
             myLapTime += 3.0
         elif (strat[lap-2]==1):
-            myLapTime += 17.0
+            myLapTime += 20.0
 
         lapTimeVector[lap-1] = myLapTime
         totalTime += myLapTime
