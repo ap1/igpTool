@@ -193,10 +193,8 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
         myLapTime = normalizedLapTime * track['difficulty'] 
         myLapTime = myLapTime * track['length']
 
-        if lap==1:
-            myLapTime += 3.0
-        elif (strat[lap-2]==1):
-            myLapTime += 20.0
+        if lap==1:              myLapTime += 5.0  # first lap
+        elif (strat[lap-2]==1): myLapTime += 20.0 # pitting lap
 
         lapTimeVector[lap-1] = myLapTime
         totalTime += myLapTime
@@ -211,7 +209,7 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
 parser = argparse.ArgumentParser(description='Iterate on pit strategies')
 
 parser.add_argument('-track',  metavar = 'name', type=str, help='name of track',          required=True)
-parser.add_argument('-stints', metavar = 'num',  type=int, help='maximum stints to try',  default=3)
+parser.add_argument('-stints', metavar = 'num',  type=int, help='maximum stints to try',  default=4)
 parser.add_argument('-laps',   metavar = 'num',  type=int, help='number of laps',         default=-1)
 
 args = parser.parse_args()
