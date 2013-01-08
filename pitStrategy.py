@@ -209,7 +209,7 @@ def predictStratTime(strat, lapGripVector, tyreSequence, track, tyreWearHard, ty
 parser = argparse.ArgumentParser(description='Iterate on pit strategies')
 
 parser.add_argument('-track',  metavar = 'name', type=str, help='name of track',          required=True)
-parser.add_argument('-stints', metavar = 'num',  type=int, help='maximum stints to try',  default=4)
+parser.add_argument('-stints', metavar = 'num',  type=int, help='maximum stints to try',  default=3)
 parser.add_argument('-laps',   metavar = 'num',  type=int, help='number of laps',         default=-1)
 
 args = parser.parse_args()
@@ -268,25 +268,29 @@ for curStints in range(1,args.stints+1):
 
                 stratString = ""
 
-                curStintIdx = 0
-                curTyre     = tyreSequence[curStintIdx]
-                for s in strat:
+                curStintIdx   = 0
+                curTyre       = tyreSequence[curStintIdx]
+                stintLapCount = 0
+                shortString   = ''
+                for (sid,s) in enumerate(strat):
                     if    curTyre == 'soft': stratString = stratString + 's' #printWithoutEnd('s')
                     elif  curTyre == 'hard': stratString = stratString + 'h' #printWithoutEnd('h')
+                    stintLapCount = stintLapCount+1
+                    
+                    if(s==1 or sid==(len(strat)-1)):
+                        shortString = shortString + '%s%0.2d%s' % ('S' if (curTyre=='soft') else 'H',stintLapCount,'_' if s==1 else '')
+                        stintLapCount = 0
 
                     if(s==1):
                         curStintIdx = curStintIdx + 1
                         curTyre = tyreSequence[curStintIdx]
-                        #printWithoutEnd('p')
                         stratString = stratString + 'p'
-                #print ''
 
-                stratLapTimes.append([totalTime, stratString, strat, tyreSequence, lapGripVector, lapFuelVector, lapTimeVector]);
-                #print "%0.1f %s" % (totalTime, stratString)
+                stratLapTimes.append([totalTime, stratString, strat, tyreSequence, lapGripVector, lapFuelVector, lapTimeVector, shortString])
 
     for sid, stratLapTime in enumerate(sorted(stratLapTimes)):
         if sid<20:
-          print "[%0.2d] [%0.0f sec] %s" % (sid+1, stratLapTime[0], stratLapTime[1])
+          print "[%0.2d] [%0.0f sec] %s %s" % (sid+1, stratLapTime[0], stratLapTime[1], stratLapTime[7])
 
     if(len(stratLapTimes)>0):    
         print "--- Top %d Stop Strategies ---" % (curStints-1)
