@@ -22,7 +22,7 @@ def fetchTrackInfo(args):
 
 # -- Estimate fuel consumption
 def estimateFuelConsumption(track):
-    return 0.700 * track['length']
+    return 0.685 * track['length']
 
 # -- Estimate tyre wear
 def estimateTyreWear(track):
