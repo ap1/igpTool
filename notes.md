@@ -28,4 +28,4 @@ Suzuka (Japan)
 
 Brazil
 ======
-* 1-stop is feasible
+* 1-stop is feasible but 2-stop is epic
