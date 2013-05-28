@@ -1,8 +1,6 @@
-
 Wet tyres
 =========
 * Don't wear much; go for 1-stop!
-
 
 Italy
 =====
@@ -14,7 +12,6 @@ Bahrain
 
 Monaco
 ======
-
 * never use hard tyres
 * possible to do one-stop soft-only _if_ you save tyres
 
