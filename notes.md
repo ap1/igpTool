@@ -13,7 +13,7 @@ Bahrain
 Monaco
 ======
 * never use hard tyres
-* possible to do one-stop soft-only _if_ you save tyres
+* possible to do one-stop if your car is fast
 
 Malaysia
 ========
