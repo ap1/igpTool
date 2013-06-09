@@ -226,7 +226,8 @@ print "%d laps" % (track['nlaps_default'])
 fuelConsumption             = estimateFuelConsumption(track)
 tyreWearSoft, tyreWearHard  = estimateTyreWear(track)
 
-minGrip = 12.5 # 12.5 is sort-of aggressive :D
+#minGrip = 12.5 # 12.5 is sort-of aggressive :D
+minGrip = 20.0
 
 softGoodLaps = findGoodLaps(tyreWearSoft, minGrip)
 hardGoodLaps = findGoodLaps(tyreWearHard, minGrip)
